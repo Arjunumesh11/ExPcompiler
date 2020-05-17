@@ -1,7 +1,7 @@
 %{
 	#include <stdlib.h>
 	#include <stdio.h>
-	#include "Header.h"
+	#include "codegenerator.h"
 
 	int yylex(void);
 	int memlocation;
