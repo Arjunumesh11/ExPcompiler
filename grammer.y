@@ -266,7 +266,12 @@ AsgStmt : VAR EQUAL expr 	     			 {$$ = CreateTree(0,INTE,NULL,OPERATOR,"=",Cre
 		| VAR EQUAL NEW '(' VAR ')'			 {
 												
 												temp1=CreateTree(0,INTE,NULL,OPERATOR,"=",CreateTree(0,INTE,$1,VARIABLE,NULL,NULL,NULL,NULL),CreateTree(0,NULL1,strdup("alloc"),ALOC,NULL,NULL,NULL,NULL),NULL);
-												temp2=CreateTree(0,INTE,NULL,OPERATOR,"=",CreateTree(0,INTE,$1,VARIABLE,NULL,CreateTree(1,INTE,NULL,NUMBER,NULL,NULL,NULL,NULL),NULL,NULL),CreateTree(0,NULL1,strdup($5),NEW0,NULL,NULL,NULL,NULL),NULL);
+												temp2=CreateTree(0,INTE,NULL,OPERATOR,"=",CreateTree(0,INTE,$1,VARIABLE,NULL,NULL,NULL,NULL),CreateTree(0,NULL1,strdup($5),NEW0,NULL,NULL,NULL,NULL),NULL);
+												$$ = CreateTree(0,0,NULL,CONNECTOR,NULL,temp1,temp2,NULL);}
+		| Field EQUAL NEW '(' VAR ')'			 {
+												
+												temp1=CreateTree(0,INTE,NULL,OPERATOR,"=",$1,CreateTree(0,NULL1,strdup("alloc"),ALOC,NULL,NULL,NULL,NULL),NULL);
+												temp2=CreateTree(0,INTE,NULL,OPERATOR,"=",$1,CreateTree(0,NULL1,strdup($5),NEW0,NULL,NULL,NULL,NULL),NULL);
 												$$ = CreateTree(0,0,NULL,CONNECTOR,NULL,temp1,temp2,NULL);}
 		| VAR EQUAL DEALLOC '(' VAR ')'		{
 											$$ = CreateTree(0,INTE,NULL,DEALOC,NULL,$$ = CreateTree(0,INTE,$5,VARIABLE,NULL,NULL,NULL,NULL),NULL,NULL);

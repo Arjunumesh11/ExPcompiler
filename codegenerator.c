@@ -568,7 +568,15 @@ int codeGen(struct tnode *t, FILE *targetfile, int option) //option 1 = value 0 
         if (strcmp(t->op, "=") == 0)
         {
             r1 = codeGen(t->left, targetfile, 0);
-            if (CLookup(t->left->type) && CLookup(t->right->type))
+            if (t->right->nodetype == NEW0)
+            {
+                fprintf(targetfile, " ADD R%d,%d\n", r1, 1);
+                pos++;
+                r2 = codeGen(t->right, targetfile, 1);
+                fprintf(targetfile, " MOV [R%d],R%d\n", r1, r2);
+                pos++;
+            }
+            else if (CLookup(t->left->type) && CLookup(t->right->type))
             {
                 r2 = codeGen(t->right, targetfile, 0);
                 fprintf(targetfile, " MOV [R%d],[R%d]\n", r1, r2);
